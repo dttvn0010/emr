@@ -1,0 +1,20 @@
+import './App.css';
+import { useSliceSelector, useSliceStore } from 'utils/helper';
+
+function App() {
+  const store = useSliceStore('app');
+  const [counter] = useSliceSelector('app', ['counter']);
+
+  const btnClick = () => {
+    store.setState({counter: counter+1});
+  }
+
+  return (
+    <div>
+      Counter: {counter}
+      <button onClick={btnClick}>Increase</button>
+    </div>
+  );
+}
+
+export default App;
