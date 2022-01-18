@@ -12,6 +12,24 @@ import store from './redux/store';
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
+axios.interceptors.request.use(request => {
+  const token = localStorage.getItem('token');
+  if(token) {
+    request.headers.common.Authorization = 'Bearer ' + token;
+  }
+  return request;
+});
+
+axios.interceptors.response.use(response => {
+  return response
+}, err => {
+  if(err?.response?.status === 403) {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  }
+  return Promise.reject(err);
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

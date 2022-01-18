@@ -5,12 +5,12 @@ import PendingVisit from "pages/encounter/pending";
 import CompleteVisit from "pages/encounter/complete";
 import RolePage from "pages/system/account/role";
 import UserPage from "pages/system/account/user";
+import Department from "pages/system/data/office/department";
 
 import { 
   Routes, 
   Route, 
   Link, 
-  withRouter, 
   useLocation, 
   useNavigate 
 } from "react-router-dom";
@@ -28,6 +28,11 @@ export default function App() {
       return <Login/>;
     }
   }
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   return (
     <>
@@ -52,7 +57,9 @@ export default function App() {
               <li>
                 <hr className="dropdown-divider" />
               </li>
-              <li><a className="dropdown-item" href="#!">Đăng xuất</a></li>
+              <li>
+                <a className="dropdown-item" onClick={logOut} href="#!">Đăng xuất</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -81,11 +88,11 @@ export default function App() {
                   </nav>
                 </div>
 
-                <div className="sb-sidenav-menu-heading">Cài đặt</div>
+                <div className="sb-sidenav-menu-heading">Hệ thống</div>
                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                   aria-expanded="false" aria-controls="collapsePages">
                   <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
-                  Hệ thống
+                  Cấu hình
                   <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                 </a>
                 <div className="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
@@ -100,6 +107,67 @@ export default function App() {
                       <nav className="sb-sidenav-menu-nested nav">
                         <Link className="nav-link" to="/system/account/role">Vai trò</Link>
                         <Link className="nav-link" to="/system/account/user">Người sử dụng</Link>
+                      </nav>
+                    </div>
+                  </nav>
+                </div>
+                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseData"
+                  aria-expanded="false" aria-controls="collapseData">
+                  <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
+                  Danh mục
+                  <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                </a>
+                <div className="collapse" id="collapseData" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                  <nav className="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionData">
+                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#departmentCollapseAuth"
+                      aria-expanded="false" aria-controls="departmentCollapseAuth">
+                      Hành chính nhân sự
+                      <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </a>
+                    <div className="collapse" id="departmentCollapseAuth" aria-labelledby="headingOne"
+                      data-bs-parent="#sidenavAccordionData">
+                      <nav className="sb-sidenav-menu-nested nav">
+                        <Link className="nav-link" to="/system/data/office/department">Phòng ban</Link>
+                      </nav>
+                    </div>
+
+                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#medicineCollapseAuth"
+                      aria-expanded="false" aria-controls="medicineCollapseAuth">
+                      Dược
+                      <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </a>
+                    <div className="collapse" id="medicineCollapseAuth" aria-labelledby="headingOne"
+                      data-bs-parent="#sidenavAccordionData">
+                      <nav className="sb-sidenav-menu-nested nav">
+                        <Link className="nav-link" to="/system/account/role">Nhà sản xuất</Link>
+                        <Link className="nav-link" to="/system/account/role">Thuốc</Link>
+                      </nav>
+                    </div>
+
+                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#serviceCollapseAuth"
+                      aria-expanded="false" aria-controls="serviceCollapseAuth">
+                      Dịch vụ
+                      <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </a>
+                    <div className="collapse" id="serviceCollapseAuth" aria-labelledby="headingOne"
+                      data-bs-parent="#sidenavAccordionData">
+                      <nav className="sb-sidenav-menu-nested nav">
+                        <Link className="nav-link" to="/system/account/role">Nhóm dịch vụ</Link>
+                        <Link className="nav-link" to="/system/account/role">Gói dịch vụ</Link>
+                      </nav>
+                    </div>
+
+                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#locationCollapseAuth"
+                      aria-expanded="false" aria-controls="locationCollapseAuth">
+                      Giường/phòng
+                      <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </a>
+                    <div className="collapse" id="locationCollapseAuth" aria-labelledby="headingOne"
+                      data-bs-parent="#sidenavAccordionData">
+                      <nav className="sb-sidenav-menu-nested nav">
+                        <Link className="nav-link" to="/system/account/role">Địa điểm</Link>
+                        <Link className="nav-link" to="/system/account/role">Giường</Link>
+                        <Link className="nav-link" to="/system/account/role">Phòng</Link>
                       </nav>
                     </div>
                   </nav>
@@ -120,6 +188,7 @@ export default function App() {
               <Route path="/encounter/complete" element={<CompleteVisit/>}/>
               <Route path="/system/account/role" element={<RolePage/>}/>
               <Route path="/system/account/user" element={<UserPage/>}/>
+              <Route path="/system/data/office/department" element={<Department/>}/>
             </Routes>
           </main>
           <footer className="py-4 bg-light mt-auto">
